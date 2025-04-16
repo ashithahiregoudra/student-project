@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html>
+
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <!-- Basic Meta Tags -->
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- Mobile Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <!-- Site Metas -->
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <link rel="shortcut icon" href="{% static 'images/favicon.png' %}" type="image/x-icon">
+
+    <title>FemmeVentures</title>
+
+    <!-- Slider Stylesheet -->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}" />
+
+    <!-- Custom Styles for the Template -->
+    <link href="{% static 'css/style.css' %}" rel="stylesheet" />
+    <!-- Responsive Styles -->
+    <link href="{% static 'css/responsive.css' %}" rel="stylesheet" />
+    <style>
+        /* Reset default margins and padding for the entire page */
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            box-sizing: border-box; /* Include padding and border in element's total width and height */
+        }
+
+        /* Universal selector to apply box-sizing to all elements */
+        *, *:before, *:after {
+            box-sizing: inherit; /* Inherit box-sizing from the body */
+        }
+
+        /* Header styles */
+        header {
+            width: 100%; /* Full width */
+            background-color: #ffffff; /* Background color */
+            padding: 20px; /* Adjust padding as needed */
+            color: #dabfa1;
+            display: flex; /* Use flexbox for layout */
+            justify-content: space-between; /* Space between logo and nav */
+            align-items: center; /* Center items vertically */
+        }
+
+        header img {
+            height: 50px; /* Adjust height as needed */
+        }
+
+        /* Navigation styles */
+        nav ul {
+            display: flex; /* Flexbox for horizontal layout */
+            justify-content: flex-end; /* Align items to the right */
+            list-style-type: none; /* Remove bullet points */
+            margin: 0; /* Remove default margin */
+            padding: 0; /* Remove default padding */
+        }
+
+        nav li {
+            margin-left: 20px; /* Adds space between each list item */
+        }
+
+        nav a {
+            color: #dabfa1;
+            text-decoration: none;
+            font-size: 1.2rem;
+        }
+
+        nav a:hover {
+            text-decoration: underline; /* Adds underline on hover for better UX */
+        }
+
+        /* Intro text styles */
+        .intro-text {
+            text-align: center; /* Centers the text horizontally */
+            padding: 200px 90px; /* Add padding for better spacing */
+            background-image: url("{% static 'images/backgrond_home.webp' %}"); /* Path to your background image */
+            background-size: cover; /* Cover the entire section */
+            background-repeat: no-repeat; /* Prevent the image from repeating */
+            background-position: center; /* Center the image */
+            color: #383d64; /* Set text color */
+            width: 100%;
+        }
+
+        .intro-text h2 {
+            font-size: 2.5rem; /* Adjust the size of the main heading */
+            color: #040404; /* Heading text color */
+        }
+
+        .intro-text p {
+            font-size: 1.3rem; /* Adjust the size of the paragraph */
+            color: #5b3535; /* Paragraph text color */
+        }
+
+        /* Combined container for Popular Subjects and Top Tutorials */
+        .combined-container {
+            background-color: #f0f0f0; /* Light gray background */
+            padding: 50px; /* Padding for the section */
+            border-radius: 10px; /* Rounded corners */
+            margin: 20px 0; /* Margin around the section */
+            text-align: center; /* Center the text */
+            width: 100%; /* Full width */
+        }
+
+        /* Popular Subjects styles */
+        .popular-subjects {
+            margin-bottom: 20px; /* Space between subjects and tutorials */
+        }
+
+        .popular-subjects h2 {
+            font-size: 2rem; /* Heading size */
+            color: #070607; /* Heading text color */
+        }
+
+        .subjects-container {
+            display: flex; /* Use flexbox for layout */
+            overflow-x: auto; /* Enable horizontal scrolling */
+            white-space: nowrap; /* Prevent line breaks */
+            padding: 10px 0; /* Padding for better spacing */
+        }
+
+        .subject {
+            background: #fff; /* White background for subjects */
+            border-radius: 15px; /* Rounded corners */
+            padding: 20px; /* Padding inside the boxes */
+            margin: 10px; /* Space between the boxes */
+            flex: 0 0 200px; /* Fixed width for subject boxes */
+            text-align: center; /* Center text in boxes */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+        }
+
+        /* Top Tutorials styles */
+        .top-tutorials h2 {
+            font-size: 2rem; /* Heading size */
+            color: #070607; /* Heading text color */
+        }
+
+        .tutorials-container {
+            display: flex; /* Use flexbox for layout */
+            overflow-x: auto; /* Enable horizontal scrolling */
+            white-space: nowrap; /* Prevent line breaks */
+            padding: 10px 0; /* Padding for better spacing */
+        }
+
+        .tutorial {
+            background: #fff; /* White background for tutorials */
+            border-radius: 15px; /* Rounded corners */
+            padding: 20px; /* Padding inside the boxes */
+            margin: 10px; /* Space between the boxes */
+            flex: 0 0 200px; /* Fixed width for tutorial boxes */
+            text-align: center; /* Center text in boxes */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+        }
+
+        .scroll-arrow {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 2rem;
+            color: #dabfa1;
+        }
+        .center-container {
+            display: flex;
+            justify-content: center; /* Center horizontally */
+            align-items: center; /* Center vertically */
+            height: 50vh; /* Full viewport height */
+            flex-direction: column; /* Stack items vertically */
+        }
+        .profile-dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 50px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+
+        .profile-dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .dropdown-content a {
+            color: black;
+            padding: 2px 2px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #f1f1f1;
+        }
+
+        #chatbot-popup {
+            display: none; /* Hidden by default */
+            position: fixed;
+            bottom: 80px; /* Adjust to position above the icon */
+            right: 20px;
+            width: 300px;
+            height: 400px;
+            border: 1px solid #ccc;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            padding: 10px;
+            border-radius: 8px;
+        }
+
+        #chatbot-header {
+            background-color: #383d64;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            border-radius: 8px 8px 0 0;
+        }
+
+        #chat-output {
+            height: 300px;
+            overflow-y: auto;
+            border: 1px solid #ccc;
+            margin-bottom: 10px;
+            padding: 5px;
+        }
+
+        #user-input {
+            width: calc(100% - 60px);
+            padding: 5px;
+        }
+
+        #send-message {
+            padding: 5px;
+        }
+
+        /* Chatbot Icon Styles */
+        #chatbot-icon {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            cursor: pointer;
+            z-index: 1000;
+            background-color: #383d64;
+            color: white;
+            border-radius: 50%;
+            padding: 10px;
+            border: none;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .why-us {
+            background-color: #f0f0f0;;
+            display: flex; /* Use flexbox for layout */
+            flex-wrap: wrap; /* Allow items to wrap to the next line */
+            justify-content: space-around; /* Space items evenly */
+            margin: 20px; /* Margin around the section */
+        }
+
+        .why-us .box {
+            background-color: #ffffff; /* White background for each box */
+            border-radius: 10px; /* Rounded corners */
+            padding: 20px; /* Padding inside the box */
+            margin: 10px; /* Space between boxes */
+            flex: 0 0 30%; /* Flex basis for responsive layout */
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+            text-align: left; /* Align text to the left */
+        }
+
+        .why-us h2 {
+            background-color: #f0f0f0;;
+            font-size: 1.5rem; /* Heading size */
+            color: #070607; /* Heading text color */
+            margin-bottom: 10px; /* Space below the heading */
+        }
+
+        .why-us p {
+            font-size: 1rem; /* Paragraph text size */
+            margin-bottom: 10px; /* Space below each paragraph */
+        }
+
+        .why-us h2 {
+    text-align: center; /* Center the header text */
+    margin-bottom: 20px; /* Space below the header */
+    color: #070607; /* Heading text color */
+        }
+
+#chatbot-icon {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            cursor: pointer;
+            z-index: 1000;
+            background-color: #383d64;
+            color: white;
+            border-radius: 50%;
+            padding: 10px;
+            border: none;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Chatbot Popup Styles */
+        #chatbot-popup {
+            display: none; /* Hidden by default */
+            position: fixed;
+            bottom: 80px; /* Adjust to position above the icon */
+            right: 20px;
+            width: 300px;
+            height: 400px;
+            border: 1px solid #ccc;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            padding: 10px;
+            border-radius: 8px;
+        }
+
+        #chatbot-header {
+            background-color: #383d64;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            border-radius: 8px 8px 0 0;
+        }
+
+        #chat-output {
+            height: 300px;
+            overflow-y: auto;
+            border: 1px solid #ccc;
+            margin-bottom: 10px;
+            padding: 5px;
+        }
+
+        #user-input {
+            width: calc(100% - 60px);
+            padding: 5px;
+        }
+
+        #send-message {
+            padding: 5px;
+            background-color: #383d64;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        #send-message:hover {
+            background-color: #4a4e7c;
+        }
+
+    </style>
+</head>
+
+<body>
+    <header>
+        <a href="{% url 'home' %}">
+            <img src="{% static 'images/eduvista.png' %}" alt="EduVista Logo" style="height: 50px;"> <!-- Adjust height as needed -->
+        </a>
+        <nav>
+            <ul>
+                <ul>
+                    <li><a href="{% url 'home' %}">Home</a></li>
+                    <li><a href="{% url 'resources' %}">Resources</a></li>
+                    <li><a href="{% url 'results' %}">Analysis</a></li>
+                    <li><a href="{% url 'find_course' %}">Find a Course</a></li> 
+                    <li><a href="{% url 'timetable_landing' %}">Timetable</a></li>
+                    <li><a href="{% url 'contact' %}">Contact Us</a></li>
+                    {% if user.is_authenticated %}
+                        <li class="profile-dropdown">
+                            <a href="javascript:void(0);" class="profile-icon"><i class="fas fa-user-circle" style="font-size: 24px;"></i></a>
+                            <div class="dropdown-content">
+                                
+                                <a href="{% url 'logout' %}">Sign Out</a>
+                            </div>
+                        </li>
+                    {% endif %}
+                </ul>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div class="intro-text">
+            <h2>Welcome to EduVista</h2>
+            <p>One Platform, Endless Learning – Explore, Learn, Succeed!</p>
+        </div>
+        <div class="combined-container">
+            <div class="popular-subjects">
+                <h2>Popular Subjects</h2>
+                <div class="subjects-container">
+                    <div class="subject">Data Structures and Algorithms</div>
+                    <div class="subject">Operating Systems</div>
+                    <div class="subject">Computer Networks</div>
+                    <div class="subject">Software Engineering</div>
+                    <div class="subject">Machine Learning</div>
+                    <div class="subject">Artificial Intelligence</div>
+                    <div class="subject">Web Development</div>
+                    <div class="subject">Cybersecurity</div>
+                </div>
+            </div>
+            <div class="top-tutorials">
+                <h2>Top Tutorials</h2>
+                <div class="tutorials-container">
+                    <div class="subject">Data Structures and Algorithms</div>
+                    <div class="subject">Mastering Recursion in Algorithms</div>
+                    <div class="subject">Understanding Deadlock in Operating Systems</div>
+                    <div class="subject">TCP/IP Protocol Demystified</div>
+                    <div class="subject">ntroduction to Neural Networks</div>
+                    <div class="subject">Artificial Intelligence</div>
+                    <div class="subject">Building Responsive Websites with HTML, CSS, and JavaScript</div>
+                
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="center-container">
+        {% if user.is_authenticated %}
+            <!-- Content for logged-in users -->
+            <h1>Welcome back, {{ user.username }}!</h1>
+            <!-- Additional content for logged-in users can go here -->
+        {% else %}
+            <div class="start-journey">
+                <h2>Start Your Journey</h2>
+                <button onclick="location.href='{% url 'register' %}'">Sign Up</button>
+                <button onclick="location.href='{% url 'login' %}'">Log In</button>
+            </div>
+        {% endif %}
+    </div>
+    
+    
+    </div>
+</div>
+
+
+    <footer style="text-align: center; padding: 20px; background-color: #383d64; color: #fff;">
+        <p>&copy; 2025 EduVista. All rights reserved.</p>
+    </footer>
+    <script>
+        function scrollLeft(container) {
+            const scrollContainer = document.querySelector(container);
+            scrollContainer.scrollBy({
+                top: 0,
+                left: -200, // Adjust the scroll amount as needed
+                behavior: 'smooth'
+            });
+        }
+
+        function scrollRight(container) {
+            const scrollContainer = document.querySelector(container);
+            scrollContainer.scrollBy({
+                top: 0,
+                left: 200, // Adjust the scroll amount as needed
+                behavior: 'smooth'
+            });
+        }
+    </script>
+
+    <!-- Add this to your base template (e.g., base.html) -->
+    <!--<button id="chatbot-icon" onclick="toggleChatbot()">
+        <i class="fas fa-comments" style="font-size: 24px; color: white;"></i>
+    </button>-->
+
+    <!-- Chatbot Popup -->
+    <div id="chatbot-popup">
+        <div id="chatbot-header">
+            <span>Chat with Us</span>
+            <button onclick="closeChatbot()" style="float: right; background: none; border: none; color: white; font-size: 18px;">&times;</button>
+        </div>
+        <div id="chat-output"></div>
+        <input type="text" id="user-input" placeholder="Type your message..." />
+        <button id="send-message">Send</button>
+    </div>
+
+    <script>
+        // Function to toggle the chatbot popup
+        function toggleChatbot() {
+            const popup = document.getElementById('chatbot-popup');
+            popup.style.display = (popup.style.display === 'block') ? 'none' : 'block';
+        }
+    
+        // Function to close the chatbot popup
+        function closeChatbot() {
+            document.getElementById('chatbot-popup').style.display = 'none';
+        }
+    
+        // Handle sending messages
+        document.getElementById('send-message').onclick = function() {
+            const userInput = document.getElementById('user-input').value;
+            if (userInput) {
+                document.getElementById('chat-output').innerHTML += `<div>User: ${userInput}</div>`;
+                document.getElementById('user-input').value = '';
+    
+                // Send the user input to the server
+                fetch("{% url 'chatbot_view' %}", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                        'X-CSRFToken': '{{ csrf_token }}'  // Include CSRF token for security
+                    },
+                    body: 'user_input=' + encodeURIComponent(userInput)
+                })
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('chat-output').innerHTML += `<div>Bot: ${data.response}</div>`;
+                    // Scroll to the bottom of the chat output
+                    const chatOutput = document.getElementById('chat-output');
+                    chatOutput.scrollTop = chatOutput.scrollHeight;
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+            }
+        };
+    </script>
+    
+</body>
+</html>
+        };
+    </script>
+    
+</body>
+</html>
