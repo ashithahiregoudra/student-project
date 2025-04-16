@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <!-- Basic Meta Tags -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="keywords" content="" />
+    <meta name="description" content="Contact EduVista for academic analysis needs" />
+    <meta name="author" content="EduVista Team" />
+    <link rel="shortcut icon" href="{% static 'images/favicon.png' %}" type="image/x-icon">
+
+    <title>{% block title %}Contact Us - EduVista{% endblock %}</title>
+
+    <!-- External Stylesheets -->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}" />
+    <link href="{% static 'css/style.css' %}" rel="stylesheet" />
+    <link href="{% static 'css/responsive.css' %}" rel="stylesheet" />
+
+    <!-- Internal Styles for Base Template -->
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4; /* Light grey background for the entire page */
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            background-color: #ffffff;
+            color: #dabfa1;
+        }
+
+        header img {
+            height: 50px; /* Adjust height as needed */
+        }
+
+        nav ul {
+            display: flex;
+            justify-content: flex-end;
+            list-style-type: none;
+        }
+
+        nav li {
+            margin-left: 20px;
+        }
+
+        nav a {
+            color: #dabfa1;
+            text-decoration: none;
+            font-size: 1.2rem;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        .container {
+            margin-top: 20px;
+            padding: 20px;
+        }
+
+        .section {
+            background-color: #ffffff; /* White background for each section */
+            padding: 20px;
+            border-radius: 8px; /* Rounded corners */
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+            margin-bottom: 20px; /* Space between sections */
+            text-align: center; /* Center text in the section */
+        }
+
+        .section h2 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .section p {
+            font-size: 1rem;
+            max-width: 600px;
+            margin: 0 auto; /* Center the paragraph */
+        }
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            max-width: 400px;
+            margin: 0 auto; /* Center the form */
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .contact-form button {
+            padding: 10px;
+            background-color: #944c6b; /* Button background color */
+            color: #fff; /* Button text color */
+            border: none;
+            border-radius: 5px; /* Rounded corners */
+            cursor: pointer;
+        }
+
+        .contact-form button:hover {
+            background-color: #7c2a82; /* Darker shade on hover */
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #383d64;
+            color: #fff;
+        }
+
+        .profile-dropdown {
+        position: relative;
+        display: inline-block;
+    }
+
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #f9f9f9;
+        min-width: 50px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 1;
+    }
+
+    .profile-dropdown:hover .dropdown-content {
+        display: block;
+    }
+
+    .dropdown-content a {
+        color: black;
+        padding: 2px 6px;
+        text-decoration: none;
+        display: block;
+    }
+
+    .dropdown-content a:hover {
+        background-color: #f1f1f1;
+    }
+    .contact-form {
+            display: flex;
+            flex-direction: column;
+            max-width: 400px;
+            margin: 0 auto; /* Center the form */
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .contact-form button {
+            padding: 10px;
+            background-color: #944c6b; /* Button background color */
+            color: #fff; /* Button text color */
+            border: none;
+            border-radius: 5px; /* Rounded corners */
+            cursor: pointer;
+        }
+
+        .contact-form button:hover {
+            background-color: #7c2a82; /* Darker shade on hover */
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Header Section -->
+    <header>
+        <a href="{% url 'home' %}">
+            <img src="{% static 'images/eduvista.png' %}" alt="EduVista Logo" style="height: 50px;"> <!-- Adjust height as needed -->
+        </a>
+        <nav>
+            <ul>
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li><a href="{% url 'resources' %}">Resources</a></li>
+                <li><a href="{% url 'results' %}">Analysis</a></li>
+                <li><a href="{% url 'find_course' %}">Find a Course</a></li> 
+                <li><a href="{% url 'timetable_landing' %}">Timetable</a></li>
+                <li><a href="{% url 'contact' %}">Contact Us</a></li>
+                {% if user.is_authenticated %}
+                    <li class="profile-dropdown">
+                        <a href="javascript:void(0);" class="profile-icon"><i class="fas fa-user-circle" style="font-size: 24px;"></i></a>
+                        <div class="dropdown-content">
+                            <a href="{% url 'logout' %}">Sign Out</a>
+                        </div>
+                    </li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div class="section">
+            <h2>Get in Touch with EduVista</h2>
+            <p>We're here to assist you with your academic needs.</p>
+        </div>
+
+        <div class="section">
+            <h2>Why Us?</h2>
+            <p>Come visit us!</p>
+                    <ul>
+                        <li><strong>Comprehensive Resource Hub</strong> – Access a vast collection of the best tutorial websites in one place, saving time and effort.</li>
+                        <li><strong>Curated Content for All Levels</strong> – Whether you're a beginner or an advanced learner, find tutorials tailored to your needs.</li>
+                        <li><strong>Time-Saving & Convenient</strong> – No need to browse multiple websites—get everything you need on a single platform.</li>
+                        <li><strong>Regularly Updated</strong> – We continuously update our database with the latest and most relevant learning resources.</li>
+                        <li><strong>Personalized Learning Experience</strong> – Get recommendations based on your interests and skill level.</li>
+                        <li><strong>Free & Open Access</strong> – Learn without any restrictions or hidden costs.</li>
+                        <li><strong>Community Support & Discussions</strong> – Engage with fellow learners, ask questions, and share knowledge.</li>
+                        <li><strong>Expert-Recommended Tutorials</strong> – We list only high-quality, trusted resources reviewed by professionals.</li>
+                        <li><strong>One-Click Access</strong> – No unnecessary logins—just browse, click, and start learning instantly.</li>
+                        <li><strong>Career & Skill Development</strong> – Gain knowledge that helps with internships, jobs, and personal growth.</li>
+                        <li><strong>Focused Learning, Zero Distractions</strong> – A clutter-free and ad-free experience so you can focus entirely on learning.</li>
+                    </ul>
+        </div>
+
+        <div class="section">
+            <h2>Business Hours</h2>
+            <p>We are open from Monday to Friday, 9 AM to 5 PM. Our team is dedicated to providing you with the assistance you need, so feel free to contact us during these hours. If you need help outside of these times, please reach out via our contact form.</p>
+        </div>
+
+        <div class="section">
+            <h2>Map and Directions</h2>
+            <p>For your convenience, we have provided a map that highlights our exact location. You can find detailed directions and nearby landmarks to make your visit even easier. We look forward to welcoming you to our office!</p>
+            <img src="{% static 'images/map.png' %}" alt="Map" />
+        </div>
+
+        <div class="section">
+            <h2>Feedback</h2>
+            <form method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                    <textarea name="message" class="form-control" rows="4" placeholder="Your feedback here..." required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit Feedback</button>
+            </form>
+        </div>
+
+        
+    </div>
+
+    <footer style="text-align: center; padding: 20px; background-color: #383d64; color: #fff;">
+        <p>&copy; 2025 EduVista. All rights reserved.</p>
+    </footer>
+</body>
+
+</html> 

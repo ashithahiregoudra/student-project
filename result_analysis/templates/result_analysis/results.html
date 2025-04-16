@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <!-- Basic Meta Tags -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="keywords" content="" />
+    <meta name="description" content="EduVista - Result Analysis for Students" />
+    <meta name="author" content="EduVista Team" />
+    <link rel="shortcut icon" href="{% static 'images/favicon.png' %}" type="image/x-icon">
+
+    <title>{% block title %}EduVista - Results{% endblock %}</title>
+
+    <!-- External Stylesheets -->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}" />
+    <link href="{% static 'css/style.css' %}" rel="stylesheet" />
+    <link href="{% static 'css/responsive.css' %}" rel="stylesheet" />
+
+    <!-- Internal Styles for Base Template -->
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4; /* Light grey background for the entire page */
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            background-color: #ffffff;
+            color: #dabfa1;
+        }
+
+        header img {
+            height: 50px; /* Adjust height as needed */
+        }
+
+        nav ul {
+            display: flex;
+            justify-content: flex-end;
+            list-style-type: none;
+        }
+
+        nav li {
+            margin-left: 20px;
+        }
+
+        nav a {
+            color: #dabfa1;
+            text-decoration: none;
+            font-size: 1.2rem;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        .container {
+            margin-top: 20px;
+            padding: 20px;
+        }
+
+        .section {
+            background-color: #ffffff; /* White background for each section */
+            padding: 20px;
+            border-radius: 8px; /* Rounded corners */
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+            margin-bottom: 20px; /* Space between sections */
+        }
+
+        .section h2 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .section p {
+            font-size: 1rem;
+            max-width: 600px;
+        }
+
+        .button-container {
+            text-align: center; /* Center the button */
+            margin-top: 20px;
+        }
+
+        .button-container a {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #944c6b; /* Button background color */
+            color: #fff; /* Button text color */
+            text-decoration: none; /* Remove underline */
+            border-radius: 5px; /* Rounded corners */
+            transition: background-color 0.3s; /* Transition for hover effect */
+        }
+
+        .button-container a:hover {
+            background-color: #7c2a82; /* Darker shade on hover */
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #383d64;
+            color: #fff;
+        }
+        .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #f9f9f9;
+        min-width: 50px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 1;
+    }
+
+    .profile-dropdown:hover .dropdown-content {
+        display: block;
+    }
+
+    .dropdown-content a {
+        color: black;
+        padding: 2px 2px;
+        text-decoration: none;
+        display: block;
+    }
+
+    .dropdown-content a:hover {
+        background-color: #f1f1f1;
+    }
+    
+  
+    </style>
+</head>
+
+<body>
+
+    <!-- Header Section -->
+    <header>
+        <a href="{% url 'home' %}">
+            <img src="{% static 'images/eduvista.png' %}" alt="EduVista Logo" style="height: 50px;"> <!-- Adjust height as needed -->
+        </a>
+        <nav>
+            <ul>
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li><a href="{% url 'resources' %}">Resources</a></li>
+                <li><a href="{% url 'results' %}">Analysis</a></li>
+                <li><a href="{% url 'find_course' %}">Find a Course</a></li> 
+                <li><a href="{% url 'timetable_landing' %}">Timetable</a></li>
+                <li><a href="{% url 'contact' %}">Contact Us</a></li>
+                {% if user.is_authenticated %}
+                    <li class="profile-dropdown">
+                        <a href="javascript:void(0);" class="profile-icon"><i class="fas fa-user-circle" style="font-size: 24px;"></i></a>
+                        <div class="dropdown-content">
+                            <a href="{% url 'logout' %}">Sign Out</a>
+                        </div>
+                    </li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Main Content Section -->
+    <div class="container">
+        <div class="section">
+            <h2>Understanding the Impact of Key Factors on Student Education and Academic Progress</h2>
+            <p>A student’s academic journey is influenced by various social, cultural, and demographic factors. By analyzing these elements, we gain valuable insights to create supportive and inclusive learning environments. Below, we explore how specific factors impact education and progress.
+            </p>
+            <p>By delving into these aspects, we aim to uncover patterns and relationships that can guide efforts to support students in achieving their academic goals.</p>
+        </div>
+
+        <div class="section">
+            <h2>Gender Distribution</h2>
+            <p>Gender influences educational outcomes through societal norms, cultural expectations, and access to opportunities.</p>
+            <h3>Key Insights:</h3>
+            <ul>
+                <li>Why It Matters: Gender-based disparities can lead to unequal participation and performance in academics.</li>
+                <li>Impact on Education: Addressing these differences helps promote equity, ensuring all students have the resources and support they need to succeed.</li>
+                <li>Understanding gender distribution can help in identifying if specific gender-based support systems or programs are required to address any disparities in academic outcomes.</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>Parental Education and Its Impact</h2>
+            <p>The educational background of parents plays a critical role in shaping a student’s academic journey.
+            </p>
+            <h3>Key Insights:</h3>
+            <ul>
+                <li>Why It Matters: Parents with higher education levels often provide better guidance and academic support at home.</li>
+                <li>Impact on Education: They may have access to resources and networks that enhance learning, whereas students whose parents lack formal education may require additional support systems to bridge the gap.</li>
+                <li>This highlights the critical role of parental educational background in fostering academic success. Institutions could consider offering additional mentoring or academic resources for students whose parents have lower educational qualifications.</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>Parental Marital Status</h2>
+            <p>A student’s home environment, influenced by parental marital status, affects emotional well-being and academic focus.</p>
+            <p><strong>Key Insights:</strong></p>
+            <ul>
+                <li>Why It Matters: Stability in the family often correlates with better academic performance and confidence in school.</li>
+                <li>Impact on Education: Students from single-parent or divorced families may face emotional challenges that hinder focus, highlighting the need for additional counseling and mentorship programs.</li>
+                <li>This indicates that marital status is not a significant determinant of academic outcomes, suggesting that other factors, such as parental involvement and educational background, may have a stronger influence.</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>Subject-Specific Challenges</h2>
+            <p>Each subject presents unique challenges that can influence a student’s learning experience and academic performance.</p>
+            <p><strong>Key Insights:</strong></p>
+            <ul>
+                <li>Why It Matters: Subjects like mathematics and science often require problem-solving skills and conceptual understanding, which may intimidate students who lack foundational knowledge. On the other hand, language and humanities subjects demand strong reading and writing skills, as well as critical thinking abilities.
+                </li>
+                <li>Impact on Education:
+                    Math and Science: Students may struggle with abstract concepts, practical applications, or a lack of confidence in tackling complex problems.
+                    Languages and Humanities: Difficulty in expressing ideas, understanding texts, or critical thinking may hinder progress.
+                    Arts and Practical Subjects: Challenges can arise from limited resources, creative blockages, or the perception that these subjects are less valuable.</li>
+                <li>These findings emphasize the need for additional support in Mathematics, such as tutoring, workshops, or enhanced classroom instruction, to help students improve in this area.</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>Ethnic Group Diversity</h2>
+            <p>Cultural and ethnic backgrounds bring diversity to the classroom and influence educational experiences.</p>
+            <p><strong>Key Insights:</strong></p>
+            <ul>
+                <li>Why It Matters: Ethnic diversity can highlight disparities in access to resources and opportunities due to systemic issues.</li>
+                <li>Impact on Education: By fostering inclusive curricula and addressing cultural biases, schools can create equitable environments where every student feels valued and empowered to achieve.</li>
+                <li>This insight underscores the importance of ensuring equitable access to resources and support for students across all ethnic groups, while also celebrating the diversity within the institution.</li>
+            </ul>
+        </div>
+
+        <div class="button-container">
+            <a href="{% url 'results_analysis' %}" class="view-analysis-button">View Analysis</a>
+        </div>
+
+        
+    </div>
+
+
+    <!-- Footer Section -->
+    <footer>
+        <p>&copy; 2025 EduVista. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>

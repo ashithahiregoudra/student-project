@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com /ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <link rel="stylesheet" href="{% static 'css/custom.css' %}">
+  <title>Student Analysis Results</title>
+</head>
+
+<body>
+  <div class="container">
+    <h2>Analysis Results</h2>
+    <h3>Average Scores Graph</h3>
+    <img src="{{ average_scores_image }}" alt="Average Scores Graph" class="img-fluid">
+    <h3>All Student Scores</h3>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Gender</th>
+          <th>Ethnic Group</th>
+          <th>Parent Education</th>
+          <th>Lunch Type</th>
+          <th>Test Preparation</th>
+          <th>Parent Marital Status</th>
+          <th>Practice Sport</th>
+          <th>Is First Child</th>
+          <th>Number of Siblings</th>
+          <th>Transport Means</th>
+          <th>Weekly Study Hours</th>
+          <th>Math Score</th>
+          <th>Reading Score</th>
+          <th>Writing Score</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for score in scores %}
+        <tr>
+          <td>{{ score.gender }}</td>
+          <td>{{ score.ethnic_group }}</td>
+          <td>{{ score.parent_education }}</td>
+          <td>{{ score.lunch_type }}</td>
+          <td>{{ score.test_preparation }}</td>
+          <td>{{ score.parent_marital_status }}</td>
+          <td>{{ score.practice_sport|yesno:"Yes,No" }}</td>
+          <td>{{ score.is_first_child|yesno:"Yes,No" }}</td>
+          <td>{{ score.nr_siblings }}</td>
+          <td>{{ score.transport_means }}</td>
+          <td>{{ score.wkly_study_hours }}</td>
+          <td>{{ score.math_score }}</td>
+          <td>{{ score.reading_score }}</td>
+          <td>{{ score.writing_score }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</body>
+
+</html>

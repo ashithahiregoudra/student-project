@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+  <!-- Basic Meta Tags -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <meta name="keywords" content="" />
+  <meta name="description" content="EduVista - Result Analysis for Students" />
+  <meta name="author" content="EduVista Team" />
+  <link rel="shortcut icon" href="{% static 'images/favicon.png' %}" type="image/x-icon">
+
+  <title>{% block title %}EduVista - Result Analysis{% endblock %}</title>
+
+  <!-- External Stylesheets -->
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
+  <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}" />
+  <link href="{% static 'css/style.css' %}" rel="stylesheet" />
+  <link href="{% static 'css/responsive.css' %}" rel="stylesheet" />
+
+  <!-- Internal Styles for Base Template -->
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px;
+      background-color: #ffffff;
+      color: #dabfa1;
+    }
+
+    header h1 {
+      font-size: 2rem;
+    }
+
+    nav ul {
+      display: flex;
+      justify-content: flex-end;
+      list-style-type: none;
+    }
+
+    nav li {
+      margin-left: 20px;
+    }
+
+    nav a {
+      color: #dabfa1;
+      text-decoration: none;
+      font-size: 1.2rem;
+    }
+
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    .container {
+      margin-top: 20px;
+    }
+
+    .tutoring-section {
+      text-align: center;
+      margin: 40px 0;
+      background-image: url("{% static 'images/children-studying.jpg' %}"); /* Background image */
+      background-size: cover; /* Cover the entire section */
+      background-repeat: no-repeat; /* Prevent the image from repeating */
+      background-color: #ffffff; /* White background */
+      width: 100%;
+      padding: 300px 200px; ;
+    }
+
+    .tutoring-section h2 {
+      font-size: 4rem;
+      color: #060606;
+    }
+
+    .tutoring-section p {
+      font-size: 1.9rem;
+      color: #f4f5f6;
+    }
+
+    .academic-resources {
+      text-align: center;
+      margin: 40px 0; /* Add some space above and below */
+      background-color: #ffffff; /* White background */
+      padding: 20px;
+    }
+
+    .academic-resources h2 {
+      font-size: 2rem;
+      color: #070707;
+    }
+
+    .academic-resources p {
+      font-size: 1.2rem;
+      color: #383d64;
+    }
+
+    .resources {
+      display: flex; /* Use flexbox for horizontal layout */
+      justify-content: space-between; /* Space between cards */
+      flex-wrap: wrap; /* Allow wrapping on smaller screens */
+      margin-top: 20px;
+      padding: 20px; /* Add padding around the resource box */
+      border: 1px solid #ddd; /* Optional: border around the resource box */
+      border-radius: 5px; /* Optional: rounded corners */
+      background-color: #f9f9f9; /* Optional: background color */
+    }
+
+    .resource-card {
+  border: 1px solid #ddd;
+  border-radius: 5px; /* Rounded corners */
+  padding: 10px; /* Padding inside the card */
+  text-align: center; /* Center the text */
+  width: 30%; /* Set a width for each card */
+  margin: 10px; /* Margin around each card */
+  background-color: #f9f9f9; /* Background color */
+}
+
+    .resource-card img {
+      width: 100px;
+      height: auto;
+      margin-bottom: 10px;
+    }
+
+  
+    .study-strategies {
+      text-align: center;
+      margin: 40px 0; /* Add space above and below */
+      background-color: #d3d3d3; /* Light grey background */
+      padding: 20px;
+    }
+
+    .study-strategies h2 {
+      font-size: 2rem;
+      color: #060606;
+    }
+
+    .study-strategies p {
+      font-size: 1.2rem;
+      color: #383d64;
+    }
+
+    .blog-posts {
+      display: flex; /* Use flexbox for horizontal layout */
+      justify-content: space-around; /* Space between blog posts */
+      margin-top: 20px;
+    }
+
+    .blog-post {
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      padding: 20px;
+      width: 30%; /* Adjust width as needed */
+      text-align: center;
+      background-color: #fff; /* Card background color */
+      margin: 10px; /* Space between blog posts */
+    }
+
+    .blog-post h4 {
+      font-size: 1.5rem;
+      color: #040404;
+    }
+
+    .blog-post p {
+      font-size: 1rem;
+      color: #383d64;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      background-color: #383d64;
+      color: #fff;
+    }
+    .blog-post {
+  margin: 20px; /* Add margin around the techniques section */
+}
+
+.blog-post {
+  margin-bottom: 30px; /* Space between each technique */
+  text-align: center; /* Center align text */
+}
+
+.blog-post img {
+  border-radius: 5px; /* Optional: rounded corners for images */
+  margin-bottom: 10px; /* Space between image and heading */
+}
+.resource-access {
+    text-align: center; /* Center the text */
+    margin: 40px 0; /* Add some space above and below */
+    background-color: #f9f9f9; /* Light background */
+    padding: 20px; /* Padding around the section */
+    border: 1px solid #ddd; /* Optional: border around the section */
+    border-radius: 5px; /* Optional: rounded corners */
+}
+
+.resource-access h2 {
+    font-size: 2rem; /* Adjust the size of the heading */
+    color: #070707; /* Heading text color */
+}
+
+.resource-access p {
+    font-size: 1.2rem; /* Adjust the size of the paragraph */
+    color: #383d64; /* Paragraph text color */
+}
+
+.resource-buttons {
+    margin-top: 20px; /* Space above the buttons */
+}
+
+.resource-buttons .btn {
+    display: inline-block; /* Make buttons inline */
+    background-color: #944c6b; /* Button background color */
+    color: #fff; /* Button text color */
+    padding: 10px 20px; /* Padding for buttons */
+    margin: 10px; /* Space between buttons */
+    text-decoration: none; /* Remove underline */
+    border-radius: 5px; /* Rounded corners */
+    transition: background-color 0.3s; /* Transition for hover effect */
+}
+
+.resource-buttons .btn:hover {
+    background-color: #7c2a82; /* Darker shade on hover */
+}
+
+/* CSS Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; /* Ensures padding and border are included in the element's total width and height */
+}
+
+/* Full-width body and html */
+html, body {
+    width: 100%;
+    height: 100%;
+}
+
+/* Header styles */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: #ffffff;
+    color: #dabfa1;
+}
+
+header h1 {
+    font-size: 2rem;
+}
+
+/* Navigation styles */
+nav ul {
+            display: flex;
+            justify-content: flex-end;
+            list-style-type: none;
+        }
+
+        nav li {
+            margin-left: 20px;
+        }
+
+        nav a {
+            color: #dabfa1;
+            text-decoration: none;
+            font-size: 1.2rem;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+/* Container styles */
+.container {
+    width: 100%; /* Make the container full width */
+    padding: 0; /* Remove padding */
+    margin-top: 20px; /* Keep the top margin if needed */
+}
+
+/* Intro text styles */
+.intro-text {
+    text-align: center;
+    padding: 2rem 0;
+    background-color: #dabfa1;
+    background-image: url('/Users/ashitha/Downloads/backgrond_home.webp');
+    color: #383d64;
+}
+
+.intro-text h2 {
+    font-size: 2.5rem;
+    color: #944c6b;
+}
+
+.intro-text p {
+    font-size: 1.2rem;
+    color: #383d64;
+}
+
+/* Section styles */
+.section {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 20px 0;
+    width: 100%; /* Ensure the section takes full width */
+}
+
+.section.left {
+    flex-direction: row;
+}
+
+.section.right {
+    flex-direction: row-reverse;
+}
+
+.section img {
+    width: 100px;
+    height: auto;
+    margin: 0 1rem;
+}
+
+.section h2 {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+}
+
+.section p {
+    font-size: 1rem;
+    max-width: 600px;
+}
+
+/* Footer styles */
+footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #383d64;
+    color: #fff;
+}
+header img {
+            height: 50px; /* Adjust height as needed */
+        }
+
+        .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #f9f9f9;
+        min-width: 50px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 1;
+    }
+
+    .profile-dropdown:hover .dropdown-content {
+        display: block;
+    }
+
+    .dropdown-content a {
+        color: black;
+        padding: 2px 2px;
+        text-decoration: none;
+        display: block;
+    }
+
+    .dropdown-content a:hover {
+        background-color: #f1f1f1;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Header Section -->
+  <header>
+    <a href="{% url 'home' %}">
+      <img src="{% static 'images/eduvista.png' %}" alt="EduVista Logo" style="height: 50px;"> <!-- Adjust height as needed -->
+  </a>
+  <nav>
+    <ul>
+      <li><a href="{% url 'home' %}">Home</a></li>
+      <li><a href="{% url 'resources' %}">Resources</a></li>
+      <li><a href="{% url 'results' %}">Analysis</a></li>
+      <li><a href="{% url 'find_course' %}">Find a Course</a></li> 
+      <li><a href="{% url 'timetable_landing' %}">Timetable</a></li>
+      <li><a href="{% url 'contact' %}">Contact Us</a></li>
+      {% if user.is_authenticated %}
+          <li class="profile-dropdown">
+              <a href="javascript:void(0);" class="profile-icon"><i class="fas fa-user-circle" style="font-size: 24px;"></i></a>
+              <div class="dropdown-content">
+                  <a href="{% url 'logout' %}">Sign Out</a>
+              </div>
+          </li>
+      {% endif %}
+  </ul> 
+  </ul>
+</nav>
+  </header>
+
+  <!-- Main Content -->
+  <div class="container">
+    <section class="tutoring-section">
+      <h2>Essential Tutoring Resources</h2>
+      <p>Empowering Students for Academic Success</p>
+    </section>
+
+    <section class="academic-resources">
+      <h2>Top Academic Resources</h2>
+      <p>Explore these valuable tools to enhance your learning experience.</p>
+    </section>
+
+    <div class="resources">
+      <div class="resource-card">
+        <img src="{% static 'images/kahnacademy.webp' %}" alt="Khan Academy" style="width: 190px; height: auto; margin-bottom: 10px;">
+        <h3>Khan Academy</h3>
+        <p>Khan Academy offers a comprehensive library of free online courses, lessons, and practice materials in various subjects. Their interactive exercises and instructional videos cater to learners of all ages, allowing students to study at their own pace. Whether you need help with math, science, humanities, or SAT prep, Khan Academy provides a robust platform to strengthen your understanding and boost your grades.
+          .</p>
+        
+      </div>
+  
+      <div class="resource-card">
+        <img src="{% static 'images/coursera.webp' %}" alt="Coursera" style="width: 190px; height: auto; margin-bottom: 10px;">
+        <h3>Coursera</h3>
+        <p>Coursera partners with top universities and organizations to provide online courses across a wide range of disciplines. Students can access high-quality educational content, including video lectures and peer-reviewed assignments. With options for both free and paid courses, Coursera allows learners to gain knowledge from leading experts and even earn certifications that can enhance their academic and career prospects.</p>
+        
+      </div>
+  
+      <div class="resource-card">
+        <img src="{% static 'images/youtube.webp' %}" alt="YouTube Educational Channels" style="width: 190px; height: auto; margin-bottom: 10px;">
+        <h3>YouTube Educational Channels</h3>
+        <p>YouTube hosts a plethora of educational channels that offer tutorials and lessons on numerous subjects. Channels such as CrashCourse, Ted-Ed, and Mathantics provide engaging and informative videos that break down complex concepts into digestible formats. Utilizing these resources can supplement classroom learning and provide visual aids that help reinforce key topics and ideas.</p>
+        
+      </div>
+    </div>
+
+    <section class="resource-access">
+      <h2>Need Access to More Resources?</h2>
+      <div class="resource-buttons">
+          <a href="{% url 'study_resources' %}" class="btn">Access Study Resources</a>
+      </div>
+  </section>
+
+    <section class="study-strategies">
+      <h2>Proven Study Strategies</h2>
+      <p>Unlock your potential with effective study techniques.</p>
+      <div class="blog-posts">
+        <div class="blog-post">
+          <img src="{% static 'images/study.jpg' %}"  alt="Mind Mapping" style="width: 100%; height: auto;">
+          <h4>Mind Mapping</h4>
+          <p>December 27, 2024</p>
+        </div>
+        <div class="blog-post">
+          <img src="{% static 'images/activerecall.jpeg' %}"  alt="Mind Mapping" style="width: 100%; height: auto;">
+          <h4>Active Recall</h4>
+          <p>December 27, 2024</p>
+        </div>
+        <div class="blog-post">
+          <img src="{% static 'images/pomodoro.png' %}"  alt="Mind Mapping" style="width: 100%; height: auto;">
+          <h4>The Pomodoro Technique</h4>
+          <p>December 27, 2024</p>
+        </div>
+      </div>
+      <div class="resource-buttons">
+        <a href="{% url 'additional_study_methods' %}" class="btn">Show More</a>
+    </div>
+    </section>
+  </div>
+
+  <!-- Footer Section -->
+  <footer>
+    <p>&copy; 2025 EduVista. All rights reserved.</p>
+  </footer>
+</body>
+
+</html>

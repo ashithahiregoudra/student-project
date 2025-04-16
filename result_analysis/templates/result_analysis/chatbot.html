@@ -1,0 +1,96 @@
+<!-- Add this to your base template (e.g., base.html) -->
+<!DOCTYPE html>
+{% load static %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Site Title</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        /* Chatbot Popup Styles */
+        #chatbot-popup {
+            display: none; /* Hidden by default */
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 300px;
+            height: 400px;
+            border: 1px solid #ccc;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            padding: 10px;
+            border-radius: 8px;
+        }
+        #chatbot-header {
+            background-color: #383d64;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            border-radius: 8px 8px 0 0;
+        }
+        #chat-output {
+            height: 300px;
+            overflow-y: auto;
+            border: 1px solid #ccc;
+            margin-bottom: 10px;
+            padding: 5px;
+        }
+        #user-input {
+            width: calc(100% - 60px);
+            padding: 5px;
+        }
+        #send-message {
+            padding: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div id="chatbot">
+        <div id="chat-output"></div>
+        <input type="text" id="user-input" placeholder="Type your message...">
+        <button id="send-message">Send</button>
+    </div>
+
+    <script>
+        document.getElementById('send-message').onclick = function() {
+            const userInput = document.getElementById('user-input').value;
+            if (userInput) {
+                document.getElementById('chat-output').innerHTML += `<div>User: ${userInput}</div>`;
+                document.getElementById('user-input').value = '';
+    
+                // Get CSRF token from cookie
+                function getCSRFToken() {
+                    let cookies = document.cookie.split(';');
+                    for (let cookie of cookies) {
+                        let [name, value] = cookie.trim().split('=');
+                        if (name === 'csrftoken') {
+                            return value;
+                        }
+                    }
+                    return '';
+                }
+    
+                fetch("{% url 'chatbot_view' %}", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                        'X-CSRFToken': getCSRFToken()
+                    },
+                    body: 'user_input=' + encodeURIComponent(userInput)
+                })
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('chat-output').innerHTML += `<div>Bot: ${data.response}</div>`;
+                    const chatOutput = document.getElementById('chat-output');
+                    chatOutput.scrollTop = chatOutput.scrollHeight;
+                });
+            }
+        };
+    </script>
+    
+</body>
+</html>

@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <title>Course Recommender - FemmeVentures</title>
+
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}" />
+    <link href="{% static 'css/style.css' %}" rel="stylesheet" />
+    <link href="{% static 'css/responsive.css' %}" rel="stylesheet" />
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4; /* Light grey background for the entire page */
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            background-color: #ffffff;
+            color: #dabfa1;
+        }
+
+        header img {
+            height: 50px; /* Adjust height as needed */
+        }
+
+        nav ul {
+            display: flex;
+            justify-content: flex-end;
+            list-style-type: none;
+        }
+
+        nav li {
+            margin-left: 20px;
+        }
+
+        nav a {
+            color: #dabfa1;
+            text-decoration: none;
+            font-size: 1.2rem;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        .container {
+            margin: 20px;
+            padding: 20px;
+            max-width: 1200px; /* Set a maximum width for the container */
+            margin: 0 auto; /* Center the container */
+        }
+
+        .search-container {
+            text-align: center; /* Center the search box */
+            margin: 20px 0; /* Space above and below the search box */
+        }
+
+        .search-container input[type="text"] {
+            padding: 10px;
+            width: 300px; /* Width of the search input */
+            border: 1px solid #ccc; /* Border for the input */
+            border-radius: 5px; /* Rounded corners */
+        }
+
+        .search-container button {
+            padding: 10px 15px; /* Padding for the button */
+            border: none; /* Remove border */
+            background-color: #383d64; /* Button background color */
+            color: white; /* Button text color */
+            border-radius: 5px; /* Rounded corners */
+            cursor: pointer; /* Pointer cursor on hover */
+            margin-left: 10px; /* Space between input and button */
+        }
+
+        .search-container button:hover {
+            background-color: #2c2f4a; /* Darker shade on hover */
+        }
+
+        .resource-container {
+            background-color: #ffffff; /* White background for the resource box */
+            padding: 20px;
+            border-radius: 8px; /* Rounded corners */
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+            margin-top: 20px; /* Space above the resource box */
+        }
+
+        .resource-list {
+            display: flex;
+            flex-wrap: wrap; /* Allow items to wrap to the next line */
+            justify-content: center; /* Center the items */
+            margin-top: 20px;
+        }
+
+        .resource-item {
+            background-color: #f9f9f9; /* Light background for each resource */
+            border: 1px solid #ddd; /* Light border */
+            border-radius: 8px; /* Rounded corners */
+            padding: 20px; /* Padding inside the box */
+            margin: 10px; /* Space between items */
+            width: 200px; /* Fixed width for each item */
+            text-align: center; /* Center the text */
+            transition: box-shadow 0.3s; /* Smooth transition for hover effect */
+        }
+
+        .resource-item:hover {
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Shadow on hover */
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #383d64;
+            color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Header Section -->
+    <header>
+        <a href="{% url 'home' %}">
+            <img src="{% static 'images/eduvista.png' %}" alt="EduVista Logo" style="height: 50px;"> <!-- Adjust height as needed -->
+        </a>
+        <nav>
+            <ul>
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li><a href="{% url 'resources' %}">Resources</a></li>
+                <li><a href="{% url 'results' %}">Analysis</a></li>
+                <li><a href="{% url 'course_recommender' %}">Find a Course</a></li> <!-- Link to the course recommender -->
+                <li><a href="{% url 'contact' %}">Contact Us</a></li>
+                {% if user.is_authenticated %}
+                    <li class="profile-dropdown">
+                        <a href="javascript:void(0);" class="profile-icon"><i class="fas fa-user-circle" style="font-size: 24px;"></i></a>
+                        <div class="dropdown-content">
+                            <a href="{% url 'logout' %}">Sign Out</a>
+                        </div>
+                    </li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="Search courses..." onkeyup="searchCourses()" />
+            <button onclick="searchCourses()">Search</button>
+        </div>
+        <div class="intro-text">
+            <h2>Course Recommender</h2>
+            <p>Find the best courses based on your interests.</p>
+        </div>
+        <div class="resource-container">
+            <div class="resource-list" id="resourceList">
+                {% for course in courses %}
+                <div class="resource-item">
+                    <a href="{{ course.url }}">{{ course.title }}</a>
+                    <p>{{ course.description }}</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 EduVista. All rights reserved.</p>
+    </footer>
+
+    <script>
+        function searchCourses() {
+            const input = document.getElementById('searchInput').value.toLowerCase();
+            const resources = document.querySelectorAll('.resource-item');
+            resources.forEach(resource => {
+                if (resource.textContent.toLowerCase().includes(input)) {
+                    resource.style.display = 'block'; // Show matching resource
+                } else {
+                    resource.style.display = 'none'; // Hide non-matching resource
+                }
+            });
+        }
+    </script>
+
+</body>
+</html>

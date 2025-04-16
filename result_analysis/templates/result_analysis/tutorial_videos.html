@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}" />
+    <link href="{% static 'css/style.css' %}" rel="stylesheet" />
+    <link href="{% static 'css/responsive.css' %}" rel="stylesheet" />
+    <title>Tutorial Videos</title>
+    <style>
+        .video-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            margin: 20px;
+        }
+
+        .video-card {
+            width: 300px;
+            margin: 10px;
+            cursor: pointer; /* Change cursor to pointer */
+            position: relative; /* Position relative for overlay */
+        }
+
+        .video-card img {
+            width: 100%; /* Make the image take the full width */
+            height: auto; /* Maintain aspect ratio */
+            border-radius: 5px; /* Rounded corners */
+        }
+
+        .video-card h3 {
+            text-align: center;
+            padding: 10px;
+        }
+
+        /* Modal styles */
+        #videoModal {
+            display: none; /* Hidden by default */
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 20px;
+            border: 1px solid #ddd;
+            z-index: 1000;
+        }
+
+        #videoModal video {
+            width: 100%; /* Full width of modal */
+            height: auto; /* Maintain aspect ratio */
+        }
+
+        .modal-overlay {
+            display: none; /* Hidden by default */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7); /* Semi-transparent background */
+            z-index: 999; /* Behind the modal */
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <a href="{% url 'home' %}">
+            <img src="{% static 'images/eduvista.png' %}" alt="EduVista Logo" style="height: 50px;">
+        </a>
+        <nav>
+            <ul>
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li><a href="{% url 'resources' %}">Resources</a></li>
+                <li><a href="{% url 'results' %}">Analysis</a></li>
+                <li><a href="{% url 'contact' %}">Contact Us</a></li>
+                <li><a href="{% url 'tutorial_videos' %}">Tutorial Videos</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="container">
+        <h1>Tutorial Videos</h1>
+        <div class="video-container">
+            <!-- Computer Science & Programming Tutorials -->
+            <div class="video-card" onclick="openModal('tutorial1.mp4')">
+                <img src="{% static 'images/tutorial1_thumbnail.jpg' %}" alt="Python for Beginners">
+                <h3>Python for Beginners – Harvard CS50 Python - Full Course</h3>
+            </div>
+            <div class="video-card" onclick="openModal('tutorial2.mp4')">
+                <img src="{% static 'images/tutorial2_thumbnail.jpg' %}" alt="C Programming Basics">
+                <h3>C Programming Basics – C Programming Course (2024)</h3>
+            </div>
+            <div class="video-card" onclick="openModal('tutorial3.mp4')">
+                <img src="{% static 'images/tutorial3_thumbnail.jpg' %}" alt="Java for Beginners">
+                <h3>Java for Beginners – Java Full Course - FreeCodeCamp</h3>
+            </div>
+            <div class="video-card" onclick="openModal('tutorial4.mp4')">
+                <img src="{% static 'images/tutorial4_thumbnail.jpg' %}" alt="Web Development">
+                <h3>Web Development (HTML, CSS, JS) – Full Web Dev Course - FreeCodeCamp</h3>
+            </div>
+            <div class="video-card" onclick="openModal('tutorial5.mp4')">
+                <img src="{% static 'images/tutorial5_thumbnail.jpg' %}" alt="SQL & Databases">
+                <h3>SQL & Databases – SQL Crash Course - Traversy Media</h3>
+            </div>
+            <div class="video-card" onclick="openModal('tutorial6.mp4')">
+                <img src="{% static 'images/tutorial6_thumbnail.jpg' %}" alt="Git & GitHub">
+                <h3>Git & GitHub for Beginners – Learn Git & GitHub - Amigoscode</h3>
+            </div>
+            <div class="video-card" onclick="openModal('tutorial7.mp4')">
+                <img src="{% static 'images/tutorial7_thumbnail.jpg' %}" alt="Software Engineering & DevOps">
+                <h3>Software Engineering & DevOps – DevOps Roadmap</h3>
+            </div>
+
+            <!-- Data Science & Machine Learning Tutorials -->
+            <div class="video-card" onclick="openModal('tutorial8.mp4')">
+                <img src="{% static 'images/tutorial8_thumbnail.jpg' %}" alt="Introduction to Data Science">
+                <h3>Introduction to Data Science – Data Science Crash Course - FreeCodeCamp</h3>
+            </div>
+            <div class="video-card" onclick="openModal('tutorial9.mp4')">
+                <img src="{% static 'images/tutorial9_thumbnail.jpg' %}" alt="Machine Learning Basics">
+                <h3>Machine Learning Basics – Machine Learning Full Course - Simplilearn</h3>
+            </div>
+            <div class="video-card" onclick="openModal('tutorial10.mp4')">
+                <img src="{% static 'images/tutorial10_thumbnail.jpg' %}" alt="Deep Learning with TensorFlow">
+                <h3>Deep Learning with TensorFlow – Deep Learning in 7 Hours</h3>
+            </div>
+            <div class="video-card" onclick="openModal('tutorial11.mp4')">
+                <img src="{% static 'images/tutorial11_thumbnail.jpg' %}" alt="Statistics for Data Science">
+                <h3>Statistics for Data Science – Stats Crash Course - StatQuest</h3>
+            </div>
+            <div class="video-card" onclick="openModal('tutorial12.mp4')">
+                <img src="{% static 'images/tutorial12_thumbnail.jpg' %}" alt="Power BI for Beginners">
+                <h3>Power BI for Beginners – Power BI Full Course</h3>
+            </div>
+            <div class="video-card" onclick="openModal('tutorial13.mp4')">
+                <img src="{% static 'images/tutorial13_thumbnail.jpg' %}" alt="Data Analysis with Pandas">
+                <h3>Data Analysis with Pandas – Pandas Full Course</h3>
+            </div>
+
+            <!-- Mathematics & Logical Thinking -->
+            <div class="video-card" onclick="openModal('tutorial14.mp4')">
+                <img src="{% static 'images/tutorial14_thumbnail.jpg' %}" alt="Discrete Mathematics">
+                <h3>Discrete Mathematics – Discrete Math Full Course - Neso Academy</h3>
+            </div>
+            <div class="video-card" onclick="openModal('tutorial15.mp4')">
+                <img src="{% static 'images/tutorial15_thumbnail.jpg' %}" alt="Linear Algebra for Machine Learning">
+                <h3>Linear Algebra for Machine Learning – Linear Algebra Essentials - 3Blue1Brown</h3>
+            </div>
+            <div class="video-card" onclick="openModal('tutorial16.mp4')">
+                <img src="{% static 'images/tutorial16_thumbnail.jpg' %}" alt="Calculus for Beginners">
+                <h3>Calculus for Beginners – Calculus Explained Visually - 3Blue1Brown</h3>
+            </div>
+            <div class="video-card" onclick="openModal('tutorial17.mp4')">
+                <img src="{% static 'images/tutorial17_thumbnail.jpg' %}" alt="Probability & Statistics">
+                <h3>Probability & Statistics – Statistics Course for Beginners</h3>
+            </div>
+
+            <!-- Exam & Study Skills -->
+            <div class="video-card" onclick="openModal('tutorial18.mp4')">
+                <img src="{% static 'images/tutorial18_thumbnail.jpg' %}" alt="How to Study Effectively">
+                <h3>How to Study Effectively – Study Tips - Ali Abdaal</h3>
+            </div>
+            <div class="video-card" onclick="openModal('tutorial19.mp4')">
+                <img src="{% static 'images/tutorial19_thumbnail.jpg' %}" alt="Time Management for Students">
+                <h3>Time Management for Students – Time Management Techniques</h3>
+            </div>
+            <div class="video-card" onclick="openModal('tutorial20.mp4')">
+                <img src="{% static 'images/tutorial20_thumbnail.jpg' %}" alt="Memory & Learning Hacks">
+                <h3>Memory & Learning Hacks – How to Learn Faster - Thomas Frank</h3>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for playing videos -->
+    <div class="modal-overlay" id="modalOverlay" onclick="closeModal()"></div>
+    <div id="videoModal">
+        <video id="modalVideo" controls>
+            <source id="videoSource" src="" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <button onclick="closeModal()" style="margin-top: 10px;">Close</button>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 EduVista. All rights reserved.</p>
+    </footer>
+
+    <script>
+        function openModal(videoFile) {
+            document.getElementById('videoSource').src = '{% static "videos/" %}' + videoFile; // Set the video source
+            document.getElementById('modalVideo').load(); // Load the new video
+            document.getElementById('modalOverlay').style.display = 'block'; // Show the overlay
+            document.getElementById('videoModal').style.display = 'block'; // Show the modal
+            document.getElementById('modalVideo').play(); // Start playing the video
+        }
+
+        function closeModal() {
+            document.getElementById('modalOverlay').style.display = 'none'; // Hide the overlay
+            document.getElementById('videoModal').style.display = 'none'; // Hide the modal
+            document.getElementById('modalVideo').pause(); // Pause the video
+            document.getElementById('modalVideo').currentTime = 0; // Reset video to start
+        }
+    </script>
+</body>
+
+</html>

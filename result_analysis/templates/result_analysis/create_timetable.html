@@ -1,0 +1,235 @@
+<!-- result_analysis/templates/result_analysis/create_timetable.html -->
+<!DOCTYPE html>
+{% load static %}
+
+<html>
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <link rel="shortcut icon" href="{% static 'images/favicon.png' %}" type="image/x-icon">
+    <title>Create Your Timetable - FemmeVentures</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}" />
+    <link href="{% static 'css/style.css' %}" rel="stylesheet" />
+    <link href="{% static 'css/responsive.css' %}" rel="stylesheet" />
+    <style>
+        /* Reset default margins and padding for the entire page */
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            box-sizing: border-box;
+        }
+        *, *:before, *:after {
+            box-sizing: inherit;
+        }
+        header {
+            width: 100%;
+            background-color: #ffffff;
+            padding: 20px;
+            color: #dabfa1;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        header img {
+            height: 50px;
+        }
+        nav ul {
+            display: flex;
+            justify-content: flex-end;
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+        nav li {
+            margin-left: 20px;
+        }
+        nav a {
+            color: #dabfa1;
+            text-decoration: none;
+            font-size: 1.2rem;
+        }
+        nav a:hover {
+            text-decoration: underline;
+        }
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #383d64;
+            color: #fff;
+        }
+        .subject-form {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        .time-input {
+            width: 200px; /* Adjust this value as needed */
+        }
+        .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #f9f9f9;
+        min-width: 50px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 1;
+    }
+
+    .profile-dropdown:hover .dropdown-content {
+        display: block;
+    }
+
+    .dropdown-content a {
+        color: black;
+        padding: 2px 2px;
+        text-decoration: none;
+        display: block;
+    }
+
+    .dropdown-content a:hover {
+        background-color: #f1f1f1;
+    }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="{% url 'home' %}">
+            <img src="{% static 'images/eduvista.png' %}" alt="EduVista Logo">
+        </a>
+        <nav>
+            <ul>
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li><a href="{% url 'resources' %}">Resources</a></li>
+                <li><a href="{% url 'results' %}">Analysis</a></li>
+                <li><a href="{% url 'find_course' %}">Find a Course</a></li> 
+                <li><a href="{% url 'timetable_landing' %}">Timetable</a></li>
+                <li><a href="{% url 'contact' %}">Contact Us</a></li>
+                {% if user.is_authenticated %}
+                    <li class="profile-dropdown">
+                        <a href="javascript:void(0);" class="profile-icon"><i class="fas fa-user-circle" style="font-size: 24px;"></i></a>
+                        <div class="dropdown-content">
+                            <a href="{% url 'logout' %}">Sign Out</a>
+                        </div>
+                    </li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+
+    <div class="container">
+        <h1>Create Your Custom Study Timetable</h1>
+        <p>Easily generate a personalized weekly study timetable by entering your computer science modules, how difficult you find each one, and your preferred study order. This tool uses your inputs to distribute study sessions across the week, helping you manage time better, focus on tough subjects, and stay consistent with your learning goals.</p>
+        <form method="POST">
+            {% csrf_token %}
+            <div id="subject-form-container">
+                <!-- Predefined subject input boxes -->
+                <div class="subject-form">
+                    <h4>Subject 1</h4>
+                    <input type="text" name="subject_name_0" placeholder="Subject Name" required>
+                    <select name="difficulty_0" required>
+                        <option value="">Select Difficulty</option>
+                        {% for i in difficulty_range %}
+                            <option value="{{ i }}">{{ i }}</option>
+                        {% endfor %}
+                    </select>
+                    <input type="number" name="time_required_0" placeholder="Time Required (hours)" min="1" max="7" required required style="width: 200px"; >
+                    <select name="importance_0" required>
+                        <option value="">Select Importance</option>
+                        {% for i in difficulty_range %}
+                            <option value="{{ i }}">{{ i }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="subject-form">
+                    <h4>Subject 2</h4>
+                    <input type="text" name="subject_name_1" placeholder="Subject Name" required>
+                    <select name="difficulty_1" required>
+                        <option value="">Select Difficulty</option>
+                        {% for i in difficulty_range %}
+                            <option value="{{ i }}">{{ i }}</option>
+                        {% endfor %}
+                    </select>
+                    <input type="number" name="time_required_1" placeholder="Time Required (hours)" min="1" max="7" required required style="width: 200px";>
+                    <select name="importance_1" required>
+                        <option value="">Select Importance</option>
+                        {% for i in difficulty_range %}
+                            <option value="{{ i }}">{{ i }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="subject-form">
+                    <h4>Subject 3</h4>
+                    <input type="text" name="subject_name_2" placeholder="Subject Name" required>
+                    <select name="difficulty_2" required>
+                        <option value="">Select Difficulty</option>
+                        {% for i in difficulty_range %}
+                            <option value="{{ i }}">{{ i }}</option>
+                        {% endfor %}
+                    </select>
+                    <input type="number" name="time_required_2" placeholder="Time Required (hours)" min="1" max="7" required required style="width: 200px";>
+                    <select name="importance_2" required>
+                        <option value="">Select Importance</option>
+                        {% for i in difficulty_range %}
+                            <option value="{{ i }}">{{ i }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="subject-form">
+                    <h4>Subject 4</h4>
+                    <input type="text" name="subject_name_3" placeholder="Subject Name" required>
+                    <select name="difficulty_3" required>
+                        <option value="">Select Difficulty</option>
+                        {% for i in difficulty_range %}
+                            <option value="{{ i }}">{{ i }}</option>
+                        {% endfor %}
+                    </select>
+                    <input type="number" name="time_required_3" placeholder="Time Required (hours)" min="1" max="7" required required style="width: 200px";>
+                    <select name="importance_3" required>
+                        <option value="">Select Importance</option>
+                        {% for i in difficulty_range %}
+                            <option value="{{ i }}">{{ i }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <button type="button" id="add-subject" class="btn btn-secondary">Add Another Subject</button>
+            <input type="hidden" name="subject_count" id="subject_count" value="4"> <!-- Updated to 4 -->
+            <button type="submit" class="btn btn-primary">Generate Timetable</button>
+        </form>
+        
+    </div>
+
+    <footer>
+        <p>&copy; 2025 EduVista. All rights reserved.</p>
+    </footer>
+
+    <script>
+        let subjectCount = 4; // Start with 4 subjects
+        document.getElementById('add-subject').onclick = function() {
+            subjectCount++;
+            document.getElementById('subject_count').value = subjectCount;
+            const container = document.getElementById('subject-form-container');
+            const newSubjectForm = document.createElement('div');
+            newSubjectForm.className = 'subject-form';
+            newSubjectForm.innerHTML = `
+                <h4>Subject ${subjectCount}</h4>
+                <input type="text" name="subject_name_${subjectCount - 1}" placeholder="Subject Name" required>
+                <select name="difficulty_${subjectCount - 1}" required>
+                    <option value="">Select Difficulty</option>
+                    ${[1, 2, 3, 4, 5].map(i => `<option value="${i}">${i}</option>`).join('')}
+                </select>
+                <input type="number" name="time_required_${subjectCount - 1}" placeholder="Time Required (hours)" min="1" max="7" required>
+                <select name="importance_${subjectCount - 1}" required>
+                    <option value="">Select Importance</option>
+                    ${[1, 2, 3, 4, 5].map(i => `<option value="${i}">${i}</option>`).join('')}
+                </select>
+            `;
+            container.appendChild(newSubjectForm);
+        };
+    </script>
+</body>
+</html>

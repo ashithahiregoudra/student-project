@@ -1,0 +1,53 @@
+<!-- edit_profile.html -->
+<!DOCTYPE html>
+{% load static %}
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+    <title>Edit Profile - EduVista</title>
+</head>
+
+<body>
+    <header>
+        <a href="{% url 'home' %}">
+            <img src="{% static 'images/eduvista.png' %}" alt="EduVista Logo" style="height: 50px;">
+        </a>
+        <nav>
+            <ul>
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li><a href="{% url 'resources' %}">Resources</a></li>
+                <li><a href="{% url 'results' %}">Analysis</a></li>
+                <li><a href="{% url 'contact' %}">Contact Us</a></li>
+                {% if user.is_authenticated %}
+                    <li class="profile-dropdown">
+                        <a href="javascript:void(0);" class="profile-icon"><i class="fas fa-user-circle" style="font-size: 24px;"></i></a>
+                        <div class="dropdown-content">
+                            
+                            <a href="{% url 'logout' %}">Sign Out</a>
+                        </div>
+                    </li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+
+    <div class="container">
+        <h2>Edit Profile</h2>
+        <form method="POST">
+            {% csrf_token %}
+            <input type="text" name="username" placeholder="Username" value="{{ user.username }}" required>
+            <input type="email" name="email" placeholder="Email" value="{{ user.email }}" required>
+            <input type="text" name="first_name" placeholder="First Name" value="{{ user.first_name }}">
+            <input type="text" name="last_name" placeholder="Last Name" value="{{ user.last_name }}">
+            <button type="submit">Save Changes</button>
+        </form>
+    </div>
+
+    <script src="{% static 'js/bootstrap.js' %}"></script>
+</body>
+
+</html>

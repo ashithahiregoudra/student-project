@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}" />
+    <link href="{% static 'css/style.css' %}" rel="stylesheet" />
+    <link href="{% static 'css/responsive.css' %}" rel="stylesheet" />
+    <title>Additional Study Methods</title>
+    <style>
+        /* Reset default margins and padding for the entire page */
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            box-sizing: border-box; /* Include padding and border in element's total width and height */
+        }
+
+        /* Header styles */
+        header {
+            width: 100%; /* Full width */
+            background-color:#ffffff; /* Background color */
+            padding: 20px; /* Adjust padding as needed */
+            color: #dabfa1;
+            display: flex; /* Use flexbox for layout */
+            justify-content: space-between; /* Space between logo and nav */
+            align-items: center; /* Center items vertically */
+        }
+
+        header img {
+            height: 50px; /* Adjust height as needed */
+        }
+
+        /* Navigation styles */
+        nav ul {
+            display: flex; /* Flexbox for horizontal layout */
+            justify-content: flex-end; /* Align items to the right */
+            list-style-type: none; /* Remove bullet points */
+            margin: 0; /* Remove default margin */
+            padding: 0; /* Remove default padding */
+        }
+
+        nav li {
+            margin-left: 20px; /* Adds space between each list item */
+        }
+
+        nav a {
+            color: #dabfa1;
+            text-decoration: none;
+            font-size: 1.2rem;
+        }
+
+        nav a:hover {
+            text-decoration: underline; /* Adds underline on hover for better UX */
+        }
+
+        .container {
+            width: 90%; /* Adjust the width of the container */
+            margin: auto; /* Center the container */
+            padding: 20px; /* Add padding */
+        }
+
+        .resources {
+            display: flex; /* Use flexbox for horizontal layout */
+            justify-content: space-between; /* Space between cards */
+            flex-wrap: wrap; /* Allow wrapping on smaller screens */
+            margin-top: 20px;
+        }
+
+        .resource-card {
+            border: 1px solid #ddd;
+            border-radius: 5px; /* Rounded corners */
+            padding: 10px; /* Padding inside the card */
+            text-align: center; /* Center the text */
+            width: 30%; /* Set a width for each card */
+            margin: 10px; /* Margin around each card */
+            background-color: #f9f9f9; /* Background color */
+            cursor: pointer; /* Change cursor to pointer */
+            transition: box-shadow 0.3s; /* Add transition for hover effect */
+        }
+
+        .resource-card:hover {
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Shadow on hover */
+        }
+
+        /* Modal styles */
+        #detailsModal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 20px;
+            border: 1px solid #ddd;
+            z-index: 1000;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #383d64;
+            color: #fff;
+        }
+        .profile-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none; /* Hidden by default */
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: #f1f1f1;
+}
+h1 {
+            text-align: center; /* Center align the header */
+            margin-bottom: 20px; /* Add some space below the header */
+            background-color: #d3d3d3; /* Grey background for the header */
+            padding: 100px 100px; /* Padding around the header text */
+            border-radius: 5px; 
+        }
+
+        .resource-card img {
+    width: 100%; /* Make the image take the full width of the card */
+    height: 150px; /* Maintain the aspect ratio */
+    border-radius: 5px; /* Rounded corners for the image */
+}
+    </style>
+</head>
+
+<body>
+    <header>
+        <a href="{% url 'home' %}">
+            <img src="{% static 'images/eduvista.png' %}" alt="EduVista Logo" style="height: 50px;">
+        </a>
+        <nav>
+            <ul>
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li><a href="{% url 'resources' %}">Resources</a></li>
+                <li><a href="{% url 'results' %}">Analysis</a></li>
+                <li><a href="{% url 'find_course' %}">Find a Course</a></li> 
+                <li><a href="{% url 'timetable_landing' %}">Timetable</a></li>
+                <li><a href="{% url 'contact' %}">Contact Us</a></li>
+                {% if user.is_authenticated %}
+                    <li class="profile-dropdown">
+                        <a href="javascript:void(0);" class="profile-icon"><i class="fas fa-user-circle" style="font-size: 24px;"></i></a>
+                        <div class="dropdown-content">
+                            <a href="{% url 'logout' %}">Sign Out</a>
+                        </div>
+                    </li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+
+    <div class="container">
+        <h1>Additional Study Methods</h1>
+        <div class="resources">
+            <div class="resource-card" onclick="showDetails('Active Recall', 'Instead of passively reading notes or textbooks, actively recall the information from memory. This strengthens neural connections and improves long-term retention. How to use it: 1.After reading a section, close the book and try to recall key points. 2.Use flashcards (e.g., Anki, Quizlet) to test yourself. 3.Teach the concept to someone else without looking at notes.')">
+                <img src="{% static 'images/active_recall.jpg' %}" alt="Active Recall" style="width: 100%; height: auto; border-radius: 5px;">
+                <h3>Active Recall</h3>
+            </div>
+            <div class="resource-card" onclick="showDetails('Spaced Repetition', 'Spaced repetition is a scientifically proven technique that involves reviewing material at increasing intervals over time rather than cramming everything at once. This approach takes advantage of the brain’s ability to retain information better when revisited periodically. You can apply spaced repetition by studying a topic today, reviewing it after two days, then a week later, and so on. Tools like Anki and SuperMemo help automate this process by prioritizing concepts that you find difficult and spacing out easier ones for less frequent review.')">
+                <img src="{% static 'images/spaced_repetition.jpg' %}" alt="Active Recall" style="width: 100%; height: auto; border-radius: 5px;">
+                <h3>Spaced Repetition</h3>
+            </div>
+            <div class="resource-card" onclick="showDetails('The Feynman Technique', 'The Feynman Technique is a powerful learning method based on the principle that if you can explain a concept in simple terms, you truly understand it. To use this technique, start by selecting a topic and attempting to explain it as if you were teaching a child. If you struggle, go back to your study material and refine your understanding. Using analogies and breaking down complex ideas into simpler ones enhances comprehension and retention.')">
+                <img src="{% static 'images/feynman-technique.png' %}" alt="Active Recall" style="width: 100%; height: auto; border-radius: 5px;">
+                <h3>The Feynman Technique</h3>
+            </div>
+            <div class="resource-card" onclick="showDetails('The Pomodoro Technique', 'This time management strategy helps maintain focus and prevents burnout. The method involves studying in short, concentrated bursts, usually for 25 minutes, followed by a 5-minute break. After four such cycles, you take a longer 15–30 minute break. The Pomodoro Technique helps increase productivity by maintaining mental freshness and preventing fatigue, making study sessions more efficient.')">
+                <img src="{% static 'images/pomodoro.png' %}" alt="Active Recall" style="width: 100%; height: auto; border-radius: 5px;">
+                <h3>The Pomodoro Technique</h3>
+            </div>
+            <div class="resource-card" onclick="showDetails('Interleaving', 'Instead of studying one subject or topic continuously, interleaving involves mixing different but related topics in a single study session. For example, if you are studying mathematics, instead of focusing only on algebra for an hour, you alternate between algebra, geometry, and calculus. This technique strengthens connections between concepts and improves problem-solving skills, as it forces the brain to adapt to different types of questions rather than relying on rote memorization.')">
+                <img src="{% static 'images/interleaving.jpg' %}" alt="Active Recall" style="width: 100%; height: auto; border-radius: 5px;">
+                <h3>Interleaving</h3>
+            </div>
+            <div class="resource-card" onclick="showDetails('Dual Coding', 'Dual coding is a technique that enhances memory by using both verbal and visual information. The brain processes information more effectively when concepts are represented in multiple formats. To apply this method, convert key concepts into diagrams, flowcharts, infographics, or mind maps. Watching educational videos while taking notes or summarizing material using visuals helps reinforce learning.')">
+                <img src="{% static 'images/dual_coding.jpg' %}" alt="Active Recall" style="width: 100%; height: auto; border-radius: 5px;">
+                <h3>Dual Coding</h3>
+            </div>
+            <!-- Add more methods as needed -->
+            <div class="resource-card" onclick="showDetails('Elaborative Interrogation', 'This strategy involves actively questioning new information to deepen understanding. Instead of just memorizing facts, ask yourself, “Why does this happen?” or “How does this connect to what I already know?” By doing so, you create meaningful connections between concepts, making it easier to recall and apply them in different contexts.')">
+                <img src="{% static 'images/elaborative_interrogation.jpg' %}" alt="Active Recall" style="width: 100%; height: auto; border-radius: 5px;">
+                <h3>Elaborative Interrogation</h3>
+            </div>
+            <div class="resource-card" onclick="showDetails('Self-Testing', 'Testing yourself is one of the most effective ways to improve retention and recall. Completing past exam papers, practice quizzes, and self-made tests mimics real exam conditions, helping to reduce anxiety and enhance performance. Instead of simply rereading notes, challenge yourself to answer questions without looking at the material, then review your mistakes to reinforce weak areas.')">
+                <img src="{% static 'images/self_testing.jpg' %}" alt="Active Recall" style="width: 100%; height: auto; border-radius: 5px;">
+                <h3>Self-Testing</h3>
+            </div>
+            <div class="resource-card" onclick="showDetails('Mind Mapping', 'Mind mapping is a technique that organizes information graphically, making it easier to remember. To create a mind map, start with a central topic and branch out into key ideas, using colors, symbols, and short keywords for emphasis. This method is particularly effective for subjects that involve interconnected concepts, such as biology, history, and philosophy.')">
+                <img src="{% static 'images/mindmap.jpg' %}" alt="Active Recall" style="width: 100%; height: auto; border-radius: 5px;">
+                <h3>Mind Mapping</h3>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 EduVista. All rights reserved.</p>
+    </footer>
+
+    <!-- Modal for showing details -->
+    <div id="detailsModal">
+        <h2 id="modalTitle"></h2>
+        <p id="modalDescription"></p>
+        <button onclick="closeModal()">Close</button>
+    </div>
+
+    <script>
+        function showDetails(title, description) {
+            document.getElementById('modalTitle').innerText = title;
+            document.getElementById('modalDescription').innerText = description;
+            document.getElementById('detailsModal').style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('detailsModal').style.display = 'none';
+        }
+        function toggleDropdown() {
+    var dropdown = document.getElementById("dropdownMenu");
+    if (dropdown.style.display === "none" || dropdown.style.display === "") {
+        dropdown.style.display = "block"; // Show the dropdown
+    } else {
+        dropdown.style.display = "none"; // Hide the dropdown
+    }
+}
+
+// Close the dropdown if the user clicks outside of it
+window.onclick = function(event) {
+    if (!event.target.matches('.profile-icon')) {
+        var dropdowns = document.getElementsByClassName("dropdown-content");
+        for (var i = 0; i < dropdowns.length; i++) {
+            var openDropdown = dropdowns[i];
+            if (openDropdown.style.display === 'block') {
+                openDropdown.style.display = 'none';
+            }
+        }
+    }
+}
+
+    </script>
+</body>
+
+</html>
