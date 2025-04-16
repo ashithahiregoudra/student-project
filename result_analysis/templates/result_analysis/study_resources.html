@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <!-- Basic Meta Tags -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="keywords" content="" />
+    <meta name="description" content="EduVista - Study Resources for Students" />
+    <meta name="author" content="EduVista Team" />
+    <link rel="shortcut icon" href="{% static 'images/favicon.png' %}" type="image/x-icon">
+
+    <title>{% block title %}EduVista - Study Resources{% endblock %}</title>
+
+    <!-- External Stylesheets -->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}" />
+    <link href="{% static 'css/style.css' %}" rel="stylesheet" />
+    <link href="{% static 'css/responsive.css' %}" rel="stylesheet" />
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4; /* Light grey background for the entire page */
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            background-color: #ffffff;
+            color: #dabfa1;
+        }
+
+        header img {
+            height: 50px; /* Adjust height as needed */
+        }
+
+        nav ul {
+            display: flex;
+            justify-content: flex-end;
+            list-style-type: none;
+        }
+
+        nav li {
+            margin-left: 20px;
+        }
+
+        nav a {
+            color: #dabfa1;
+            text-decoration: none;
+            font-size: 1.2rem;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        .container {
+            margin-top: 20px;
+            padding: 20px;
+        }
+
+        .intro-text {
+            text-align: center;
+            padding: 2rem 0;
+            background-color: #dabfa1;
+            color: #383d64;
+        }
+
+        .intro-text h2 {
+            font-size: 2.5rem;
+            color: #944c6b;
+        }
+
+        .intro-text p {
+            font-size: 1.2rem;
+            color: #383d64;
+        }
+
+        .resource-container {
+            background-color: #ffffff; /* White background for the resource box */
+            padding: 20px;
+            border-radius: 8px; /* Rounded corners */
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+            margin-top: 20px; /* Space above the resource box */
+        }
+
+        .resource-list {
+            display: flex;
+            flex-wrap: wrap; /* Allow items to wrap to the next line */
+            justify-content: center; /* Center the items */
+            margin-top: 20px;
+        }
+
+        .resource-item {
+            background-color: #f9f9f9; /* Light background for each resource */
+            border: 1px solid #ddd; /* Light border */
+            border-radius: 8px; /* Rounded corners */
+            padding: 20px; /* Padding inside the box */
+            margin: 10px; /* Space between items */
+            width: 200px; /* Fixed width for each item */
+            text-align: center; /* Center the text */
+            transition: box-shadow 0.3s; /* Smooth transition for hover effect */
+        }
+
+        .resource-item:hover {
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Shadow on hover */
+        }
+
+        footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #383d64;
+    color: #fff;
+}
+html, body {
+    width: 100%;
+    height: 100%;
+}
+
+        .video-container video {
+            width: 100%; /* Make the video take the full width of the container */
+            height: auto; /* Maintain the aspect ratio */
+            max-width: 1000px; /* Optional: set a maximum width */
+        }
+
+        .resource-section {
+            margin-top: 20px; /* Space above each section */
+        }
+
+        .resource-section h3 {
+            font-size: 1.8rem; /* Heading size */
+            color: #383d64; /* Heading color */
+            margin-bottom: 10px; /* Space below heading */
+        }
+
+        .resource-section p {
+            font-size: 1.1rem; /* Content size */
+            color: #555; /* Content color */
+            margin-bottom: 10px; /* Space below content */
+        }
+
+        .search-container {
+            margin-bottom: 20px; /* Space below the search box */
+            text-align: center; /* Center the search box */
+        }
+
+        .search-container input[type="text"] {
+            padding: 10px;
+            width: 300px; /* Width of the search input */
+            border: 1px solid #ccc; /* Border for the input */
+            border-radius: 5px; /* Rounded corners */
+        }
+
+        .search-container button {
+            padding: 10px 15px; /* Padding for the button */
+            border: none; /* Remove border */
+            background-color: #383d64; /* Button background color */
+            color: white; /* Button text color */
+            border-radius: 5px; /* Rounded corners */
+            cursor: pointer; /* Pointer cursor on hover */
+            margin-left: 10px; /* Space between input and button */
+        }
+
+        .search-container button:hover {
+            background-color: #2c2f4a; /* Darker shade on hover */
+        }
+
+        .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #f9f9f9;
+        min-width: 50px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 1;
+    }
+
+    .profile-dropdown:hover .dropdown-content {
+        display: block;
+    }
+
+    .dropdown-content a {
+        color: black;
+        padding: 2px 2px;
+        text-decoration: none;
+        display: block;
+    }
+
+    .dropdown-content a:hover {
+        background-color: #f1f1f1;
+    }
+
+    </style>
+</head>
+
+<body>
+
+    <!-- Header Section -->
+    <header>
+        <a href="{% url 'home' %}">
+            <img src="{% static 'images/eduvista.png' %}" alt="EduVista Logo" style="height: 50px;"> <!-- Adjust height as needed -->
+        </a>
+        <nav>
+            <ul>
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li><a href="{% url 'resources' %}">Resources</a></li>
+                <li><a href="{% url 'results' %}">Analysis</a></li>
+                <li><a href="{% url 'find_course' %}">Find a Course</a></li> 
+                <li><a href="{% url 'timetable_landing' %}">Timetable</a></li>
+                <li><a href="{% url 'contact' %}">Contact Us</a></li>
+                {% if user.is_authenticated %}
+                    <li class="profile-dropdown">
+                        <a href="javascript:void(0);" class="profile-icon"><i class="fas fa-user-circle" style="font-size: 24px;"></i></a>
+                        <div class="dropdown-content">
+                            <a href="{% url 'logout' %}">Sign Out</a>
+                        </div>
+                    </li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="video-container" style="text-align: center; margin-bottom: 20px;">
+            <video width="800" height="700" autoplay muted controls>
+                <source src="{% static 'videos/Drive into the resources page to gain more knowlege or enhance existing knowledge.mp4' %}" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+        <div class="intro-text">
+            <h2>Available Study Resources</h2>
+            <p>Explore various resources to enhance your knowledge.</p>
+        </div>
+
+        
+
+        <div class="resource-section">
+            <h3>General Computer Science and Programming</h3>
+            <p><a href="https://www.geeksforgeeks.org/">GeeksforGeeks</a> – Free resources for programming, algorithms, and CS fundamentals.</p>
+            <p><a href="https://www.freecodecamp.org/">freeCodeCamp</a> – Completely free coding courses and certifications.</p>
+            <p><a href="https://www.w3schools.com/">w3schools</a> – Free tutorials for web development and programming languages.</p>
+            <p><a href="https://cs50.harvard.edu/x/2023/">CS50x by Harvard</a> – Free introductory computer science course.</p>
+            <p><a href="https://www.theodinproject.com/">The Odin Project</a> – Free full-stack web development curriculum.</p>
+            <p><a href="https://nptel.ac.in/">NPTEL</a> – Free video lectures from IITs in India.</p>
+            <p><a href="https://ocw.mit.edu/">MIT OpenCourseWare</a> – Free university-level courses, including CS and engineering.</p>
+            <p><a href="https://www.khanacademy.org/">Khan Academy</a> – Free tutorials on CS, math, and more.</p>
+            <p><a href="https://www.tutorialspoint.com/">TutorialsPoint</a> – Free tutorials for programming and engineering topics.</p>
+            <p><a href="https://devdocs.io/">DevDocs</a> – Free programming documentation.</p>
+        </div>
+
+        <!-- Programming Practice Section -->
+        <div class="resource-section">
+            <h3>Programming Practice</h3>
+            <p><a href="https://www.hackerrank.com/">HackerRank</a> – Free coding challenges and competitions.</p>
+            <p><a href="https://leetcode.com/">LeetCode (Free Tier)</a> – Practice coding for free with a limited set of problems.</p>
+            <p><a href="https://www.codewars.com/">Codewars</a> – Free coding challenges and exercises.</p>
+            <p><a href="https://practice.geeksforgeeks.org/">GeeksforGeeks Practice</a> – Free coding problems and solutions.</p>
+            <p><a href="https://www.topcoder.com/">Topcoder</a> – Free competitive programming platform.</p>
+        </div>
+
+        <!-- Data Science and Machine Learning Section -->
+        <div class="resource-section">
+            <h3>Data Science and Machine Learning</h3>
+            <p><a href="https://www.kaggle.com/">Kaggle</a> – Free tutorials, datasets, and competitions.</p>
+            <p><a href="https://statquest.org/">StatQuest</a> – Free statistical and machine learning tutorials.</p>
+            <p><a href="https://education.rstudio.com/">RStudio Education</a> – Free tutorials for learning R programming.</p>
+            <p><a href="https://towardsdatascience.com/">Towards Data Science (Medium)</a> – Free data science blogs and articles (some may require sign-up).</p>
+            <p><a href="https://www.analyticsvidhya.com/">Analytics Vidhya</a> – Free resources for data science and AI.</p>
+            <p><a href="https://machinelearningmastery.com/">Machine Learning Mastery</a> – Free beginner-friendly machine learning tutorials.</p>
+        </div>
+
+        <!-- Web Development Section -->
+        <div class="resource-section">
+            <h3>Web Development</h3>
+            <p><a href="https://developer.mozilla.org/">Mozilla Developer Network (MDN)</a> – Free documentation for web technologies.</p>
+            <p><a href="https://www.frontendmentor.io/">Frontend Mentor</a> – Free web development practice projects (limited access for free users).</p>
+            <p><a href="https://codepen .io/">CodePen</a> – Free platform to practice front-end coding.</p>
+        </div>
+
+        <!-- University-Level Free Resources Section -->
+        <div class="resource-section">
+            <h3>University-Level Free Resources</h3>
+            <p><a href="https://www.open.edu/openlearn/">OpenLearn</a> – Free courses from The Open University.</p>
+            <p><a href="https://online.stanford.edu/">Stanford Online</a> – Free university-level courses.</p>
+            <p><a href="https://www.edx.org/">edX (Audit Mode)</a> – Audit courses for free from top universities.</p>
+        </div>
+
+        <!-- Math for Computer Science Section -->
+        <div class="resource-section">
+            <h3>Math for Computer Science</h3>
+            <p><a href="http://tutorial.math.lamar.edu/">Paul's Online Math Notes</a> – Free math notes and tutorials.</p>
+            <p><a href="https://www.desmos.com/">Desmos</a> – Free graphing calculator and interactive tools.</p>
+            <p><a href="https://www.wolframalpha.com/">Wolfram Alpha (Free Tier)</a> – Free computational engine for math.</p>
+            <p><a href="https://brilliant.org/">Brilliant (Free Tier)</a> – Free math and science challenges (with optional paid content).</p>
+        </div>
+
+        <!-- Miscellaneous Topics Section -->
+        <div class="resource-section">
+            <h3>Miscellaneous Topics</h3>
+            <p><a href="https://www.youtube.com/c/HusseinNasserYouTube">Hussein Nasser YouTube</a> – Free tutorials on databases and system design.</p>
+            <p><a href="https://www.youtube.com/c/GauravSen">Gaurav Sen YouTube</a> – Free system design tutorials.</p>
+            <p><a href="https://fivethirtyeight.com/">FiveThirtyEight</a> – Real-world data insights and statistical analysis.</p>
+            <p><a href="https://realpython.com/">Real Python</a> – Free Python tutorials and blogs (limited access).</p>
+        </div>
+        <div class="resource-section">
+            <h3>General Interview Preparation</h3>
+            <p><a href="https://www.geeksforgeeks.org/">GeeksforGeeks</a> – Comprehensive resources for coding, technical questions, and interview preparation.</p>
+            <p><a href="https://www.glassdoor.com/">Glassdoor</a> – Company-specific interview questions and insights from previous candidates.</p>
+            <p><a href="https://www.indiabix.com/">IndiaBIX</a> – Free resources for aptitude, reasoning, and technical interview preparation.</p>
+            <p><a href="https://www.bigocheatsheet.com/">Big-O Cheat Sheet</a> – Quick reference for algorithm complexities.</p>
+            <p><a href="https://www.careercup.com/">CareerCup</a> – User-contributed technical interview questions from top companies.</p>
+        </div>
+
+        <!-- Coding Interview Preparation Section -->
+        <div class="resource-section">
+            <h3>Coding Interview Preparation</h3>
+            <p><a href="https://www.hackerrank.com/">HackerRank</a> – Free coding practice with a focus on interview problems.</p>
+            <p><a href="https://leetcode.com/">LeetCode (Free Tier)</a> – Practice coding problems for free with limited access.</p>
+            <p><a href="https://www.codewars.com/">Codewars</a> – Practice coding challenges to sharpen problem-solving skills.</p>
+            <p><a href="https://www.algoexpert.io/">AlgoExpert</a> – Offers a free trial for coding interview preparation.</p>
+            <p><a href="https://www.codingninjas.com/blog/">Coding Ninjas Blog</a> – Guides and coding interview tips for free.</p>
+        </div>
+
+        <!-- System Design Interview Preparation Section -->
+        <div class="resource-section">
+            <h3>System Design Interview Preparation</h3>
+            <p><a href="https://www.educative.io/courses/grokking-the-system-design-interview">Grokking the System Design Interview (Medium Articles)</a> – Free articles on system design basics.</p>
+            <p><a href="https://www.youtube.com/c/GauravSen">Gaurav Sen YouTube</a> – Free system design tutorials and mock interviews.</p>
+            <p><a href="https://www.youtube.com/c/HusseinNasserYouTube">Hussein Nasser YouTube</a> – Tutorials on databases and distributed systems.</p>
+        </div>
+
+        <!-- Behavioral Interview Preparation Section -->
+        <div class="resource-section">
+            <h3>Behavioral Interview Preparation</h3>
+            <p><a href="https://www.themuse.com/advice/interview-questions-and-answers">The Muse</a> – Guides on answering common behavioral interview questions.</p>
+            <p><a href="https://www.indeed.com/career-advice/interviewing/behavioral-interview-questions">Indeed Career Guide</a> – Sample questions and answers for behavioral interviews.</p>
+            <p><a href="https://www.biginterview.com/blog/">Big Interview Blog</a> – Free resources for preparing for behavioral and competency-based interviews.</p>
+            <p><a href="https://zety.com/interview-prep">Zety Interview Prep</a> – Behavioral and situational interview guides.</p>
+        </div>
+
+        <!-- Aptitude and Logical Reasoning Preparation Section -->
+        <div class="resource-section">
+            <h3>Aptitude and Logical Reasoning Preparation</h3>
+            <p><a href="https://www.indiabix.com/">IndiaBIX</a> – Free aptitude, logical reasoning, and verbal ability practice.</p>
+            <p><a href="https://prepinsta.com/">PrepInsta</a> – Free resources for placement exams and aptitude tests.</p>
+            <p><a href="https://testbook.com/">Testbook</a> – Free practice tests for aptitude and reasoning skills.</p>
+        </div>
+
+        <!-- Mock Interview Practice Section -->
+        <div class="resource-section">
+            <h3>Mock Interview Practice</h3>
+            <p><a href="https://pramp.com/">Pramp</a> – Free mock interviews with peers for coding and behavioral questions.</p>
+            <p><a href="https://interviewbuddy.com/">InterviewBuddy</a> – Offers free trials for mock interview sessions.</p>
+            <p><a href="https://www.techinterviewpro.com/">Technical Mock Interviews</a> – Free mock coding interviews with feedback.</p>
+        </div>
+
+        <!-- Soft Skills and Communication Section -->
+        <div class="resource-section">
+            <h3>Soft Skills and Communication</h3>
+            <p><a href="https://www.toastmasters.org/">Toastmasters</a> – Resources to improve communication and leadership skills.</p>
+            <p><a href="https://www.linkedin.com/learning /">LinkedIn Learning Free Resources</a> – Offers some free soft skills and communication courses.</p>
+            <p><a href="https://www.skillshare.com/">SkillShare (Free Trial)</a> – Free communication and interview preparation courses during the trial period.</p>
+        </div>
+
+        <!-- Specialized Platforms Section -->
+        <div class="resource-section">
+            <h3>Specialized Platforms</h3>
+            <p><a href="https://exercism.io/">Exercism</a> – Free platform to improve coding and get mentorship.</p>
+            <p><a href="https://www.scaler.com/topics/">Scaler Topics</a> – Free CS and interview preparation guides.</p>
+            <p><a href="https://www.reddit.com/r/cscareerquestions/">Reddit – CS Career Questions</a> – Community-driven tips and experiences on interviews.</p>
+            <p><a href="https://www.crackingthecodinginterview.com/">Cracking the Coding Interview (PDF Resources)</a> – Free resources based on the popular book.</p>
+        </div>
+
+        <div class="next-arrow">
+            <a href="{% url 'study_resources_finance' %}">&#8594;</a> <!-- Right arrow symbol -->
+        </div>
+
+    <!-- Footer Section -->
+    <footer>
+        <p>&copy; 2025 EduVista. All rights reserved.</p>
+    </footer>
+
+    <script>
+        function trackResourceClick(resourceName) {
+            fetch(`/track-click?resource=${encodeURIComponent(resourceName)}`, {
+                method: 'GET',
+                credentials: 'include'
+            });
+        }
+    </script>
+    <script>
+        function searchResources() {
+            const input = document.getElementById('searchInput').value.toLowerCase();
+            const resources = document.querySelectorAll('.resource-item');
+            resources.forEach(resource => {
+                if (resource.textContent.toLowerCase().includes(input)) {
+                    resource.style.display = 'block'; // Show matching resource
+                } else {
+                    resource.style.display = 'none'; // Hide non-matching resource
+                }
+            });
+        }
+    </script>
+    
+</body>
+
+</html>
